@@ -1,0 +1,62 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .anime-bg { fill: #00f3ff; }
+      .anime-skin { fill: #f9d5b8; }
+      .anime-hair { fill: #2d1b69; }
+      .anime-eye { fill: #fff; }
+      .anime-pupil { fill: #000; }
+      .anime-mouth { fill: #ff69b4; }
+      .anime-shirt { fill: #bc13fe; }
+      .anime-code { fill: #00f3ff; font-family: monospace; font-size: 12px; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="#0a0e27"/>
+  
+  <!-- Glow effect -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#00f3ff" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Head -->
+  <circle cx="100" cy="70" r="30" class="anime-skin"/>
+  
+  <!-- Hair -->
+  <path d="M 70 50 Q 70 40 100 40 Q 130 40 130 50 Q 130 60 100 65 Q 70 60 70 50" class="anime-hair"/>
+  
+  <!-- Hair spikes -->
+  <path d="M 85 45 L 82 30" stroke="#2d1b69" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 100 42 L 100 25" stroke="#2d1b69" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 115 45 L 118 30" stroke="#2d1b69" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Left Eye -->
+  <ellipse cx="85" cy="65" rx="8" ry="12" class="anime-eye"/>
+  <circle cx="85" cy="68" r="5" class="anime-pupil"/>
+  <circle cx="86" cy="66" r="2" fill="#fff"/>
+  
+  <!-- Right Eye -->
+  <ellipse cx="115" cy="65" rx="8" ry="12" class="anime-eye"/>
+  <circle cx="115" cy="68" r="5" class="anime-pupil"/>
+  <circle cx="116" cy="66" r="2" fill="#fff"/>
+  
+  <!-- Mouth -->
+  <path d="M 95 80 Q 100 85 105 80" stroke="#ff69b4" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Shirt/Body -->
+  <rect x="65" y="95" width="70" height="60" rx="8" class="anime-shirt"/>
+  
+  <!-- Code lines on shirt -->
+  <text x="75" y="115" class="anime-code">{'{'}</text>
+  <text x="90" y="115" class="anime-code">code</text>
+  <text x="75" y="130" class="anime-code">{'}'}</text>
+  
+  <!-- Left arm -->
+  <rect x="45" y="100" width="20" height="50" rx="10" class="anime-skin" transform="rotate(-20 55 100)"/>
+  
+  <!-- Right arm -->
+  <rect x="135" y="100" width="20" height="50" rx="10" class="anime-skin" transform="rotate(20 145 100)"/>
+  
+  <!-- Accent lines (neon effect) -->
+  <line x1="60" y1="140" x2="140" y2="140" stroke="#00f3ff" stroke-width="1" opacity="0.5"/>
+  <line x1="65" y1="150" x2="135" y2="150" stroke="#bc13fe" stroke-width="1" opacity="0.5"/>
+</svg>
