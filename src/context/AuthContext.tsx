@@ -5,13 +5,13 @@ interface User {
   id: string;
   name: string;
   email: string;
-  role: 'student' | 'recruiter';
+  role: 'student' | 'recruiter' | 'organizer';
   avatar: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (role: 'student' | 'recruiter') => void;
+  login: (role: 'student' | 'recruiter' | 'organizer') => void;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -23,34 +23,59 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [, setLocation] = useLocation();
 
   useEffect(() => {
-    // Check local storage for existing session
-    const storedUser = localStorage.getItem('codecraft_user');
+    // Check sessionStorage only (cleared on browser close)
+    const storedUser = sessionStorage.getItem('codecraft_user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Failed to parse user data:', error);
+        sessionStorage.removeItem('codecraft_user');
+      }
     }
   }, []);
 
-  const login = (role: 'student' | 'recruiter') => {
+  const login = (role: 'student' | 'recruiter' | 'organizer') => {
+    const roleNames = {
+      student: 'Alex Coder',
+      recruiter: 'Sarah Recruiter',
+      organizer: 'Event Organizer'
+    };
+    const roleEmails = {
+      student: 'alex@codecraft.dev',
+      recruiter: 'sarah@hiring.com',
+      organizer: 'organizer@events.com'
+    };
+    const roleSeed = {
+      student: 'AlexCoder',
+      recruiter: 'SarahRecruiter',
+      organizer: 'EventOrganizer'
+    };
+
     const mockUser: User = {
-      id: '1',
-      name: role === 'student' ? 'Alex Coder' : 'Sarah Recruiter',
-      email: role === 'student' ? 'alex@codecraft.dev' : 'sarah@hiring.com',
+      id: String(Math.random()),
+      name: roleNames[role],
+      email: roleEmails[role],
       role: role,
-      avatar: `https://ui-avatars.com/api/?name=${role === 'student' ? 'Alex+Coder' : 'Sarah+Recruiter'}&background=random`
+      avatar: `https://api.dicebear.com/7.x/anime/svg?seed=${roleSeed[role]}&scale=80`
     };
     setUser(mockUser);
-    localStorage.setItem('codecraft_user', JSON.stringify(mockUser));
+    // Only use sessionStorage for security (cleared when browser closes)
+    sessionStorage.setItem('codecraft_user', JSON.stringify(mockUser));
     
     if (role === 'student') {
       setLocation('/dashboard');
-    } else {
+    } else if (role === 'recruiter') {
       setLocation('/recruiter');
+    } else {
+      setLocation('/hackathons');
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('codecraft_user');
+    // Clear sessionStorage only (no localStorage to clear now)
+    sessionStorage.removeItem('codecraft_user');
     setLocation('/');
   };
 

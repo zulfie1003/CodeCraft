@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import GlassCard from '@/components/GlassCard';
 import NeonButton from '@/components/NeonButton';
+import { PracticeSkeleton } from '@/components/PracticeSkeleton';
 import { 
   Briefcase, Code2, Users, CheckCircle, Plus, X, ExternalLink, 
   Zap, TrendingUp, Award 
@@ -13,10 +14,27 @@ const Practice = () => {
   const [mode, setMode] = useState<'skills' | 'company'>('skills');
   const [selectedSkills, setSelectedSkills] = useState<string[]>(['React', 'JavaScript']);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [allSkills] = useState([
     'DSA', 'React', 'Node.js', 'System Design', 'SQL', 'JavaScript', 
     'Java', 'AWS', 'Databases', 'C#', 'GraphQL', 'CSS'
   ]);
+
+  useEffect(() => {
+    // Simulate data loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <div className="max-w-6xl mx-auto">
+          <PracticeSkeleton />
+        </div>
+      </Layout>
+    );
+  }
 
   const toggleSkill = (skill: string) => {
     setSelectedSkills(prev => 

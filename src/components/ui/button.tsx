@@ -12,20 +12,16 @@ const buttonVariants = cva(
       variant: {
         default:
            // @replit: no hover, and add primary border
-           "bg-primary text-primary-foreground border border-primary-border",
+           "dark:bg-cyan-500 dark:text-black dark:border-cyan-400 dark:hover:bg-cyan-400 dark:hover:shadow-lg dark:hover:shadow-cyan-500/50 bg-primary text-primary-foreground border border-primary-border",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm border-destructive-border",
+          "dark:bg-red-600 dark:text-white dark:border-red-500 dark:hover:bg-red-500 dark:hover:shadow-lg dark:hover:shadow-red-500/50 bg-destructive text-destructive-foreground shadow-sm border-destructive-border",
         outline:
-          // @replit Shows the background color of whatever card / sidebar / accent background it is inside of.
-          // Inherits the current text color. Uses shadow-xs. no shadow on active
-          // No hover state
-          " border [border-color:var(--button-outline)] shadow-xs active:shadow-none ",
+          "dark:text-cyan-300 dark:border-cyan-400 dark:hover:bg-cyan-500/20 dark:hover:text-cyan-200 dark:hover:shadow-lg dark:hover:shadow-cyan-500/30 border [border-color:var(--button-outline)] shadow-xs active:shadow-none ",
         secondary:
-          // @replit border, no hover, no shadow, secondary border.
-          "border bg-secondary text-secondary-foreground border border-secondary-border ",
+          "dark:bg-purple-600 dark:text-white dark:border-purple-400 dark:hover:bg-purple-500 dark:hover:shadow-lg dark:hover:shadow-purple-500/50 border bg-secondary text-secondary-foreground border border-secondary-border ",
         // @replit no hover, transparent border
-        ghost: "border border-transparent",
-        link: "text-primary underline-offset-4 hover:underline",
+        ghost: "dark:text-cyan-300 dark:hover:text-cyan-200 dark:hover:bg-cyan-500/15 border border-transparent",
+        link: "dark:text-cyan-400 dark:hover:text-cyan-300 text-primary underline-offset-4 hover:underline",
       },
       size: {
         // @replit changed sizes

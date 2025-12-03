@@ -64,8 +64,13 @@ const Portfolio = () => {
   const handleSave = () => {
     setProfileData(editData);
     setIsEditing(false);
-    // Here you would typically send the data to your backend
-    localStorage.setItem('userProfile', JSON.stringify(editData));
+    // Store in sessionStorage for security (cleared on browser close)
+    // Note: For production, send this to a secure backend API
+    try {
+      sessionStorage.setItem('userProfile', JSON.stringify(editData));
+    } catch (error) {
+      console.error('Failed to save profile:', error);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -226,25 +231,27 @@ const Portfolio = () => {
                     <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {profileData.location}</span>
                     <span className="flex items-center gap-1"><Mail className="w-4 h-4" /> {profileData.email}</span>
                   </div>
-                </div>
-                <div className="flex gap-3 mb-2">
-                  <a href={`https://${profileData.github}`} target="_blank" rel="noopener noreferrer">
-                    <GlassCard className="p-2 rounded-lg hover:bg-white/10 cursor-pointer"><Github className="w-5 h-5" /></GlassCard>
-                  </a>
-                  <a href={`https://${profileData.linkedin}`} target="_blank" rel="noopener noreferrer">
-                    <GlassCard className="p-2 rounded-lg hover:bg-white/10 cursor-pointer"><Linkedin className="w-5 h-5" /></GlassCard>
-                  </a>
-                  <a href={`https://${profileData.website}`} target="_blank" rel="noopener noreferrer">
-                    <GlassCard className="p-2 rounded-lg hover:bg-white/10 cursor-pointer"><Globe className="w-5 h-5" /></GlassCard>
-                  </a>
-                </div>
               </div>
-              <div className="px-4 pb-4 flex justify-end">
+              <div className="flex gap-3 mb-2">
+                <a href={`https://${profileData.github}`} target="_blank" rel="noopener noreferrer">
+                  <GlassCard className="p-2 rounded-lg hover:bg-white/10 cursor-pointer"><Github className="w-5 h-5" /></GlassCard>
+                </a>
+                <a href={`https://${profileData.linkedin}`} target="_blank" rel="noopener noreferrer">
+                  <GlassCard className="p-2 rounded-lg hover:bg-white/10 cursor-pointer"><Linkedin className="w-5 h-5" /></GlassCard>
+                </a>
+                <a href={`https://${profileData.website}`} target="_blank" rel="noopener noreferrer">
+                  <GlassCard className="p-2 rounded-lg hover:bg-white/10 cursor-pointer"><Globe className="w-5 h-5" /></GlassCard>
+                </a>
+              </div>
+            </div>
+            {!isEditing && (
+              <div className="flex justify-end mt-4">
                 <Button onClick={handleEditToggle} className="bg-primary text-black hover:bg-primary/80 flex items-center gap-2">
                   <Edit2 className="w-4 h-4" /> Edit Profile
                 </Button>
               </div>
-            </>
+            )}
+          </>
           )}
         </GlassCard>
 

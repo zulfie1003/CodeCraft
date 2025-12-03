@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import GlassCard from '@/components/GlassCard';
 import NeonButton from '@/components/NeonButton';
+import { DashboardSkeleton } from '@/components/DashboardSkeleton';
 import { fetchGitHubRepos, GitHubRepo } from '@/api/github';
 import { fetchLeetCodeStats, LeetCodeStats } from '@/api/leetcode';
 import { 
@@ -31,15 +32,36 @@ const skillData = [
 
 const Dashboard = () => {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   // @ts-ignore
   const [leetStats, setLeetStats] = useState<LeetCodeStats | null>(null);
 
   useEffect(() => {
     // Fetch mock data
-    fetchGitHubRepos('facebook').then(setRepos); // Using 'facebook' as dummy public data
-    // @ts-ignore
-    fetchLeetCodeStats('dummy').then(setLeetStats);
+    const loadData = async () => {
+      setIsLoading(true);
+      try {
+        const [reposData, statsData] = await Promise.all([
+          fetchGitHubRepos('facebook'),
+          // @ts-ignore
+          fetchLeetCodeStats('dummy')
+        ]);
+        setRepos(reposData);
+        setLeetStats(statsData);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    loadData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <DashboardSkeleton />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -99,19 +121,61 @@ const Dashboard = () => {
           
           {/* Activity Chart */}
           <GlassCard className="lg:col-span-2">
-            <h3 className="text-lg font-bold mb-6">Activity Overview</h3>
-            <div className="h-[300px] w-full">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold">Activity Overview</h3>
+              <div className="flex gap-4 text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'var(--color-primary)' }} />
+                  <span className="text-muted-foreground">Commits</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded" style={{ backgroundColor: 'var(--color-secondary)' }} />
+                  <span className="text-muted-foreground">Problems</span>
+                </div>
+              </div>
+            </div>
+            <div className="h-80 w-full -mx-2 px-2">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={activityData}>
+                <BarChart 
+                  data={activityData}
+                  margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+                >
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
-                  <XAxis dataKey="name" stroke="#888" fontSize={12} tickLine={false} axisLine={false} />
-                  <YAxis stroke="#888" fontSize={12} tickLine={false} axisLine={false} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#0a0a0a', borderColor: '#333' }} 
-                    itemStyle={{ color: '#fff' }}
+                  <XAxis 
+                    dataKey="name" 
+                    stroke="#888" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
                   />
-                  <Bar dataKey="commits" fill="var(--color-primary)" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="problems" fill="var(--color-secondary)" radius={[4, 4, 0, 0]} />
+                  <YAxis 
+                    stroke="#888" 
+                    fontSize={12} 
+                    tickLine={false} 
+                    axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+                  />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                      border: '1px solid rgba(0, 243, 255, 0.3)',
+                      borderRadius: '8px',
+                      padding: '8px 12px'
+                    }} 
+                    itemStyle={{ color: '#fff' }}
+                    cursor={{ fill: 'rgba(0, 243, 255, 0.1)' }}
+                  />
+                  <Bar 
+                    dataKey="commits" 
+                    fill="var(--color-primary)" 
+                    radius={[4, 4, 0, 0]}
+                    name="Commits"
+                  />
+                  <Bar 
+                    dataKey="problems" 
+                    fill="var(--color-secondary)" 
+                    radius={[4, 4, 0, 0]}
+                    name="Problems"
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

@@ -15,14 +15,16 @@ const Settings = () => {
       <div className="max-w-2xl mx-auto space-y-8">
         <h1 className="text-3xl font-bold">Settings</h1>
 
-        <GlassCard>
-          <h3 className="text-xl font-bold mb-6">Appearance</h3>
-          <div className="flex items-center justify-between">
+        <GlassCard className="dark:border-cyan-500/30 dark:bg-cyan-500/5">
+          <h3 className="text-xl font-bold mb-6 dark:text-cyan-300">Appearance</h3>
+          <div className="flex items-center justify-between p-4 rounded-lg dark:bg-cyan-500/10 dark:border-cyan-400/30 border border-white/10 bg-white/5">
             <div className="flex items-center gap-4">
-              <Moon className="w-5 h-5 text-primary" />
+              <div className="dark:text-cyan-400 text-primary">
+                {isDark ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              </div>
               <div className="space-y-1">
-                <Label>Dark Mode</Label>
-                <p className="text-xs text-muted-foreground">Experience the neon glow.</p>
+                <Label className="dark:text-cyan-300">Dark Mode</Label>
+                <p className="text-xs text-muted-foreground">{isDark ? 'Experience the neon glow.' : 'Switch to dark mode for better visibility.'}</p>
               </div>
             </div>
             <Switch checked={isDark} onCheckedChange={toggleDarkMode} />

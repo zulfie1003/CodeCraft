@@ -18,10 +18,10 @@ const NeonButton: React.FC<NeonButtonProps> = ({
   const baseStyles = "relative inline-flex items-center justify-center font-bold transition-all duration-300 rounded-lg group overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
-    primary: "bg-primary/10 text-primary border border-primary hover:bg-primary hover:text-black",
-    secondary: "bg-secondary/10 text-secondary border border-secondary hover:bg-secondary hover:text-white",
-    outline: "bg-transparent text-foreground border border-white/20 hover:border-primary hover:text-primary",
-    ghost: "bg-transparent text-muted-foreground hover:text-foreground hover:bg-white/5"
+    primary: "dark:bg-cyan-500/20 dark:text-cyan-300 dark:border-cyan-400 dark:hover:bg-cyan-500/40 dark:hover:shadow-lg dark:hover:shadow-cyan-500/50 bg-primary/10 text-primary border border-primary hover:bg-primary hover:text-black",
+    secondary: "dark:bg-purple-600/20 dark:text-purple-300 dark:border-purple-400 dark:hover:bg-purple-600/40 dark:hover:shadow-lg dark:hover:shadow-purple-500/50 bg-secondary/10 text-secondary border border-secondary hover:bg-secondary hover:text-white",
+    outline: "dark:text-cyan-300 dark:border-cyan-400 dark:hover:bg-cyan-500/20 dark:hover:shadow-lg dark:hover:shadow-cyan-500/30 bg-transparent text-foreground border border-white/20 hover:border-primary hover:text-primary",
+    ghost: "dark:text-cyan-300 dark:hover:text-cyan-200 dark:hover:bg-cyan-500/15 bg-transparent text-muted-foreground hover:text-foreground hover:bg-white/5"
   };
 
   const sizes = {
